@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, TimePicker } from 'antd';
+import axios from 'axios';
 const layout = {
   labelCol: {
     span: 8,
@@ -9,21 +10,20 @@ const layout = {
   },
 };
 
-/* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: '${label} is required!',
   types: {
     email: '${label} is not a valid email!',
-    number: '${label} is not a valid number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
   },
 };
-/* eslint-enable no-template-curly-in-string */
 
-const onFinish = (values) => {
-  console.log(values);
+const onFinish = async (values) => {
+  try {
+    await axios.post('http://localhost:3001/api/candidates', values.user);
+    message.success('Form submitted successfully!');
+  } catch (error) {
+    message.error('Failed to submit the form!');
+  }
 };
 const CandidateInfo = () => {
   return (
