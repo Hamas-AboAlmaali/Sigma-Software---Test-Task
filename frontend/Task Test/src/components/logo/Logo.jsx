@@ -1,5 +1,5 @@
 import React from 'react'
-import companyLogo from '../assets/Sigma Software logo.png'
+import companyLogo from '../../assets/Sigma Software logo.png'
 
 const Logo = () => {
   return (
