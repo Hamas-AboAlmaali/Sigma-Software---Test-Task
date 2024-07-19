@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, TimePicker } from 'antd';
+import { Button, Form, Input, TimePicker, message } from 'antd';
 import axios from 'axios';
 const layout = {
   labelCol: {
@@ -17,20 +17,25 @@ const validateMessages = {
   },
 };
 
-const onFinish = async (values) => {
-  try {
-    await axios.post('http://localhost:3001/api/candidates', values.user);
-    message.success('Form submitted successfully!');
-  } catch (error) {
-    message.error('Failed to submit the form!');
-  }
-};
 const CandidateInfo = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    try {
+      await axios.post('http://localhost:3001/api/candidates', values.user);
+      form.resetFields();
+      message.success('Form submitted successfully!');
+    } catch (error) {
+      message.error('Failed to submit the form!');
+    }
+  };
+
   return (
     <div className='mx-auto w-1/2'>
       <Form
         className='mx-auto'
         {...layout}
+        form={form}
         name="nest-messages"
         onFinish={onFinish}
         validateMessages={validateMessages}
@@ -124,4 +129,4 @@ const CandidateInfo = () => {
   )
 }
 
-export default CandidateInfo
+export default CandidateInfo;
